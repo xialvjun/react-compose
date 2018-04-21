@@ -1,0 +1,27 @@
+{
+  "name": "@xialvjun/react-compose",
+  "version": "0.0.1",
+  "description": "A way to deal with React Render Props Component Callback Hell. In flat vdom, which won't make React rebuild the DOM.",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xialvjun/react-compose.git"
+  },
+  "keywords": [
+    "react",
+    "render props"
+  ],
+  "author": "xialvjun@live.com",
+  "license": "MIT",
+  "peerDependencies": {
+    "react": "^0.14.0 || ^15.0.0 || ^16.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^16.3.8",
+    "typescript": "^2.8.1"
+  }
+}
