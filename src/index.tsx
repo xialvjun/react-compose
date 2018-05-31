@@ -1,5 +1,6 @@
-import * as React from 'react';
-import { Component, ReactNode, ReactType, ReactElement, ComponentClass, SFC } from 'react';
+import * as React from "react";
+import { Component } from "react";
+import { ReactNode, ReactType, ReactElement, ComponentClass, SFC } from "react";
 
 class Result extends Component<{ children: () => ReactNode }> {
   render() {
@@ -7,7 +8,7 @@ class Result extends Component<{ children: () => ReactNode }> {
   }
 }
 
-export type MapperProp = ReactElement<any> | ComponentClass | SFC
+export type MapperProp = ReactElement<any> | ComponentClass | SFC;
 
 /**
  * todo: children 的 arg 参数的 any 类型应该是取决于 T 的
@@ -16,15 +17,22 @@ export type MapperProp = ReactElement<any> | ComponentClass | SFC
  * 1. 类: 可以是 继承了 Component 的类，或者是 StatelessFunctionComponent. SFC 可以把 不以 children 作为 render_props 的组件临时转换为以 children 作为 render_props
  * 2. 类的实例: 相当于对函数做了 curry 操作，提前提供了一些参数，最后只剩下 children 参数
  */
-export class Compose<T extends Record<string, MapperProp> | MapperProp[]> extends Component<{ mapper: T, children: (arg: any) => ReactNode, strict: boolean }> {
+export class Compose<
+  T extends Record<string, MapperProp> | MapperProp[]
+> extends Component<{
+  mapper: T;
+  children: (arg: any) => ReactNode;
+  strict: boolean;
+}> {
   force_update = false;
   componentWillUpdate() {
     this.force_update = false;
   }
   render() {
-    const { mapper, children, strict=false } = this.props;
-    const mapper_is_array = Object.prototype.toString.call(mapper) === "[object Array]";
-    const arg = mapper_is_array ? [] : {};
+    const { mapper, children, strict = false } = this.props;
+    const mapper_is_array =
+      Object.prototype.toString.call(mapper) === "[object Array]";
+    const arg: any = mapper_is_array ? [] : {};
     return (
       <React.Fragment>
         {Object.keys(mapper).map((key: keyof T) => {
@@ -32,22 +40,22 @@ export class Compose<T extends Record<string, MapperProp> | MapperProp[]> extend
           const with_key = mapper_is_array ? null : { key };
           const children = (...args) => {
             arg[key] = args;
-            if (!strict && args.length===1) {
+            if (!strict && args.length === 1) {
               arg[key] = args[0];
             }
             if (this.force_update) {
               this.forceUpdate();
             }
             return null;
-          }
+          };
           if (typeof value === "function") {
             if (value.__proto__ === React.Component) {
-              return React.createElement(value, with_key, children);
+              return React.createElement(value as any, with_key, children);
             }
             // ! 把 value 当函数适用于 SFC。真实用例: mapper={[({ children }) => <OldRenderProps render={children} some_other_props />] 。如果仍然用 createElement，则每次都会重建 DOM
-            return value({ ...with_key, children });
+            return (value as any)({ ...with_key, children });
           }
-          return React.cloneElement(value, with_key, children);
+          return React.cloneElement(value as any, with_key, children);
         })}
         <Result>
           {() => {

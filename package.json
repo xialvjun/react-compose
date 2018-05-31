@@ -1,27 +1,40 @@
 {
   "name": "@xialvjun/react-compose",
-  "version": "0.0.1",
-  "description": "A way to deal with React Render Props Component Callback Hell. In flat vdom, which won't make React rebuild the DOM.",
-  "main": "lib/index.js",
-  "scripts": {
-    "build": "tsc",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/xialvjun/react-compose.git"
-  },
-  "keywords": [
-    "react",
-    "render props"
-  ],
-  "author": "xialvjun@live.com",
-  "license": "MIT",
+  "version": "0.0.2",
+  "description":
+    "A way to deal with React Render Props Component Callback Hell. In flat vdom, which won't make React rebuild the DOM.",
+  "repository": "github:xialvjun/react-compose",
+  "keywords": ["react", "render props"],
+  "----------------": "----------------",
   "peerDependencies": {
-    "react": "^0.14.0 || ^15.0.0 || ^16.0.0"
+    "react": "^16.3.2"
   },
   "devDependencies": {
     "@types/react": "^16.3.8",
-    "typescript": "^2.8.1"
+    "rimraf": "^2.6.2",
+    "typescript": "^2.8.3"
+  },
+  "dependencies": {},
+  "================": "================",
+  "author": "xialvjun@live.com",
+  "license": "MIT",
+  "++++++++++++++++": "++++++++++++++++",
+  "files": ["src/", "es/", "lib/", "dist/", "types/"],
+  "-esnext": "esnext_source_code_not_ts",
+  "module": "es/index.js",
+  "main": "lib/index.js",
+  "-unpkg": "dist/index.js",
+  "-jsdelivr": "dist/index.js",
+  "types": "types/index.d.ts",
+  "################": "################",
+  "scripts": {
+    "build":
+      "npm run build:es && npm run build:lib && npm run build:dist && npm run build:types",
+    "build:es": "rimraf -r es && tsc --outDir es --module es6",
+    "build:lib": "rimraf -r lib && tsc --outDir lib --module commonjs",
+    "build:dist": "rimraf -r dist && echo not_implemented",
+    "build:types":
+      "rimraf -r types && tsc --outDir types --declaration --emitDeclarationOnly",
+    "test": "echo \"Error: no test specified\" && exit 1"
   }
 }
