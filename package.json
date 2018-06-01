@@ -1,6 +1,6 @@
 {
   "name": "@xialvjun/react-compose",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description":
     "A way to deal with React Render Props Component Callback Hell. In flat vdom, which won't make React rebuild the DOM.",
   "repository": "github:xialvjun/react-compose",

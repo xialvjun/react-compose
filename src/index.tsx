@@ -22,14 +22,14 @@ export class Compose<
 > extends Component<{
   mapper: T;
   children: (arg: any) => ReactNode;
-  strict: boolean;
+  strict?: boolean;
 }> {
   force_update = false;
   componentWillUpdate() {
     this.force_update = false;
   }
   render() {
-    const { mapper, children, strict = false } = this.props;
+    const { mapper, children, strict } = this.props;
     const mapper_is_array =
       Object.prototype.toString.call(mapper) === "[object Array]";
     const arg: any = mapper_is_array ? [] : {};
